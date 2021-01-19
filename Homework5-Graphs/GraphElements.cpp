@@ -2,6 +2,7 @@
 
 Edge::Edge(Vertex* t)
 {
+	//eli levin, can you see this message?
 	target = t;
 }
 
