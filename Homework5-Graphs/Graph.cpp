@@ -1,16 +1,13 @@
 #include "Graph.h"
 
-Vertex* Graph::findVertex(string s)
+//returns an iterator pointing to the map level with the intended Vertex
+map<Vertex, list<Vertex>>::iterator Graph::findVertex(const string& s)
 {
-	map<Vertex, list<Vertex>>::iterator it;
-
-	for (it = graphMap.begin(); it != graphMap.end(); it++)
-	{
+	for (map<Vertex, list<Vertex>>::iterator it = graphMap.begin(); it != graphMap.end(); ++it)
 		if (it->first.Key == s)
 			return it;
-	}
 
-	return NULL;
+	return graphMap.end();
 }
 
 bool Graph::addVertexShell(string v)
