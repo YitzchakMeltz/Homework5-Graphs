@@ -28,7 +28,8 @@ public:
 	int numOfNeighbors();
 	bool targetExist(Vertex* v);
 	bool operator==(Vertex& v);
-	void print();
+	void print()const;
+	friend class Graph;
 private:
 	string Key;
 	Color color;

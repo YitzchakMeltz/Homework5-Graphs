@@ -2,7 +2,6 @@
 
 Edge::Edge(Vertex* t)
 {
-	//eli levin, can you see this message?
 	target = t;
 }
 
@@ -51,13 +50,13 @@ bool Vertex:: operator==(Vertex& v)
 	return false;
 }
 
-void Vertex::print()
+void Vertex::print()const
 {
 	cout << Key << ": ";
 
-	list<Edge>::iterator it;
+	//list<Edge>::iterator it;
 
-	for (it = EdgeList.begin(); it != EdgeList.end(); it++)
+	for (list<Edge>::const_iterator it = EdgeList.cbegin(); it != EdgeList.cend(); it++)
 	{
 		cout << it->target->Key << " ";
 	}
