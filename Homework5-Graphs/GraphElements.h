@@ -1,5 +1,6 @@
 #include<string>
 #include <list>
+#include<iostream>
 
 #pragma once
 
@@ -27,6 +28,7 @@ public:
 	int numOfNeighbors();
 	bool targetExist(Vertex* v);
 	bool operator==(Vertex& v);
+	void print();
 private:
 	string Key;
 	Color color;

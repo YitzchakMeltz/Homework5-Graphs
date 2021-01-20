@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GraphElements.h" />
+    <ClInclude Include="Header.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphElements.cpp" />

@@ -50,3 +50,15 @@ bool Vertex:: operator==(Vertex& v)
 
 	return false;
 }
+
+void Vertex::print()
+{
+	cout << Key << ": ";
+
+	list<Edge>::iterator it;
+
+	for (it = EdgeList.begin(); it != EdgeList.end(); it++)
+	{
+		cout << it->target->Key << " ";
+	}
+}
