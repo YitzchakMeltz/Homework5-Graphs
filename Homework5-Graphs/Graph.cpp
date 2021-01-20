@@ -19,7 +19,7 @@ bool Graph::addVertexShell(string v)
 
 bool Graph::delVertexShell(string v)
 {
-
+	Vertex temp = (findVertex(v))->first;			//find the Vertex that needs to be deleted
 
 	// delete edges that are incident (to or from ) it
 
