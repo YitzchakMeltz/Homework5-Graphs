@@ -9,9 +9,9 @@ using namespace std;
 class Graph
 {
 public:
-	Graph();
-	~Graph();
-	map<Vertex, list<Vertex>>::iterator findVertex(const string& s);
+	Graph() {};
+	~Graph() { graphMap.clear(); }
+	bool vertexExist(string);
 	bool addVertexShell(string v);
 	bool delVertexShell(string v);
 	bool addEdgeShell(string s, string t);
@@ -21,5 +21,5 @@ public:
 	bool printAllReachedShell(string k);
 	bool printAll();
 private:
-	map<Vertex, list<Vertex>> graphMap;
+	map<string, Vertex> graphMap;
 };

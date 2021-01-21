@@ -1,42 +1,87 @@
 #include "Graph.h"
 
-//returns an iterator pointing to the map level with the intended Vertex
-map<Vertex, list<Vertex>>::iterator Graph::findVertex(const string& s)
+bool Graph::vertexExist(string s)
 {
-	for (map<Vertex, list<Vertex>>::iterator it = graphMap.begin(); it != graphMap.end(); ++it)
-		if (it->first.Key == s)
-			return it;
+	map<string, Vertex>::iterator it;
 
-	return graphMap.end();
+	for (it = graphMap.begin(); it != graphMap.end(); it++)
+		if (it->first == s)
+			return true;
+
+	return false;
 }
 
 bool Graph::addVertexShell(string v)
 {
-	Vertex tempV = Vertex(v);
-	list<Vertex> tempN;
-	graphMap.insert(pair<Vertex, list<Vertex>>(tempV, tempN));
+	graphMap.insert({ v,Vertex(v) });
 }
 
 bool Graph::delVertexShell(string v)
 {
-	Vertex temp = (findVertex(v))->first;			//find the Vertex that needs to be deleted
+	Vertex* temp = &graphMap[v];
 
-	// delete edges that are incident (to or from ) it
+	map<string, Vertex>::iterator it;
 
-	list<Vertex>::iterator it;
+	//find and remove all edges to our Vertex
+	for (it = graphMap.begin(); it != graphMap.end(); it++)
+	{
+		if (it->second.targetExist(temp))
+			it->second.removeEdge(Edge(temp));
+	}
 
-	for(it=)
-
+	graphMap.erase(v);			//erases that Vertex from the map
 }
 
-bool Graph::printAll()
+bool Graph::addEdgeShell(string s, string t)
 {
-	map<Vertex, list<Vertex>>::iterator it;
+	if (!vertexExist(s))
+		throw "Error. Source vertex does not exist.\n";
+
+	if (!vertexExist(t))
+		throw "Error. Target vertex does not exist.\n";
+
+	if (graphMap[s].edgeExist(t))
+		throw "ERROR. Edge already exist.\n";
+
+	graphMap[s].addEdge(&graphMap[t]);
+}
+
+bool Graph::delEdgeShell(string s, string t)
+{
+	if (!vertexExist(s))
+		throw "Error. Source vertex does not exist.\n";
+
+	if (!vertexExist(t))
+		throw "Error. Target vertex does not exist.\n";
+
+	if (!graphMap[s].edgeExist(t))
+		throw "ERROR. Edge does not exist.\n";
+
+	graphMap[s].removeEdge(Edge(&graphMap[t]));
+}
+
+
+//given Vertex v, prints all vertices u that have an edge from v to u
+bool Graph::printNeighborsShell(string k)
+{
+	if (!vertexExist(k))
+		throw "Error. Source vertex does not exist.\n";
+
+	list<Edge>::iterator it;
+
+	for (it = graphMap[k].EdgeList.begin(); it != graphMap[k].EdgeList.end(); it++)
+		cout << it->target->Key << endl;
+}
+
+bool Graph::printFollowersShell(string k)
+{
+	map<string, Vertex>::iterator it;
 
 	for (it = graphMap.begin(); it != graphMap.end(); it++)
 	{
-		it->first.print();
-	}
+		list<Edge>::iterator jt;
 
-	return true;
+		for(jt=it->second.EdgeList.begin(); jt != it->second.EdgeList.end();it++)
+			if(jt->target==&graphMap[k])
+	}
 }
