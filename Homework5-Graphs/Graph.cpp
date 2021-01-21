@@ -81,7 +81,8 @@ bool Graph::printFollowersShell(string k)
 	{
 		list<Edge>::iterator jt;
 
-		for(jt=it->second.EdgeList.begin(); jt != it->second.EdgeList.end();it++)
-			if(jt->target==&graphMap[k])
+		for (jt = it->second.EdgeList.begin(); jt != it->second.EdgeList.end(); it++)
+			if (jt->target == &graphMap[k])
+				cout << it->first << endl;
 	}
 }
