@@ -5,7 +5,7 @@ Edge::Edge(Vertex* t)
 	target = t;
 }
 
-bool Edge:: operator==(Edge& e)
+bool Edge:: operator==(const Edge& e) const
 {
 	if (this->target != e.target)
 		return false;
@@ -16,7 +16,8 @@ bool Edge:: operator==(Edge& e)
 Vertex::Vertex(string key)
 {
 	Key = key;
-	color = Color::White;
+	reached = false;
+	//color = White;
 }
 
 void Vertex::addEdge(Edge e)
@@ -27,6 +28,8 @@ void Vertex::addEdge(Edge e)
 bool Vertex::removeEdge(Edge e)
 {
 	EdgeList.remove(e);
+
+	return true;
 }
 
 int Vertex::numOfNeighbors()
@@ -68,13 +71,13 @@ bool Vertex:: operator==(Vertex& v)
 	return false;
 }
 
-void Vertex::print()const
+void Vertex::print()
 {
 	cout << Key << ": ";
 
 	//list<Edge>::iterator it;
 
-	for (list<Edge>::const_iterator it = EdgeList.cbegin(); it != EdgeList.cend(); it++)
+	for (list<Edge>::iterator it = EdgeList.begin(); it != EdgeList.end(); it++)
 	{
 		cout << it->target->Key << " ";
 	}

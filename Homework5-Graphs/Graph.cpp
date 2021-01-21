@@ -14,6 +14,8 @@ bool Graph::vertexExist(string s)
 bool Graph::addVertexShell(string v)
 {
 	graphMap.insert({ v,Vertex(v) });
+
+	return true;
 }
 
 bool Graph::delVertexShell(string v)
@@ -30,6 +32,8 @@ bool Graph::delVertexShell(string v)
 	}
 
 	graphMap.erase(v);			//erases that Vertex from the map
+
+	return true;
 }
 
 bool Graph::addEdgeShell(string s, string t)
@@ -44,6 +48,8 @@ bool Graph::addEdgeShell(string s, string t)
 		throw "ERROR. Edge already exist.\n";
 
 	graphMap[s].addEdge(&graphMap[t]);
+
+	return true;
 }
 
 bool Graph::delEdgeShell(string s, string t)
@@ -58,6 +64,8 @@ bool Graph::delEdgeShell(string s, string t)
 		throw "ERROR. Edge does not exist.\n";
 
 	graphMap[s].removeEdge(Edge(&graphMap[t]));
+
+	return true;
 }
 
 
@@ -71,6 +79,8 @@ bool Graph::printNeighborsShell(string k)
 
 	for (it = graphMap[k].EdgeList.begin(); it != graphMap[k].EdgeList.end(); it++)
 		cout << it->target->Key << endl;
+
+	return true;
 }
 
 bool Graph::printFollowersShell(string k)
@@ -85,4 +95,19 @@ bool Graph::printFollowersShell(string k)
 			if (jt->target == &graphMap[k])
 				cout << it->first << endl;
 	}
+
+	return true;
+}
+
+bool Graph::printAll()
+{
+	map<string, Vertex>::iterator it;
+
+	for (it = graphMap.begin(); it != graphMap.end(); it++)
+	{
+		it->second.print();
+		cout << endl;
+	}
+
+	return true;
 }

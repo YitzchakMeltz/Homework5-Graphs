@@ -63,7 +63,7 @@ int main()
 			case 7:
 				cout << "enter writer\n";
 				cin >> v1;
-				g.printAllReachedShell(v1);
+				//g.printAllReachedShell(v1);
 				break;
 
 			case 8:

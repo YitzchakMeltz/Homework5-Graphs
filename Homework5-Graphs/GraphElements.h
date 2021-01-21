@@ -12,17 +12,18 @@ class Edge
 {
 public:
 	Edge(Vertex* t);
-	bool operator==(Edge& e);
+	bool operator==(const Edge& e) const;
 
 	//fields
 	Vertex* target;
 };
 
-enum class Color {White,Gray,Black};
+//enum class Color {White,Gray,Black};
 
 class Vertex
 {
 public:
+	Vertex() { reached = false; }
 	Vertex(string key);
 	void addEdge(Edge);
 	bool removeEdge(Edge);
@@ -30,10 +31,11 @@ public:
 	bool targetExist(Vertex* v);
 	bool edgeExist(string);
 	bool operator==(Vertex& v);
-	void print()const;
+	void print();
 	friend class Graph;
 private:
 	string Key;
-	Color color;
+	bool reached;
+	//Color color=Color::White;
 	list<Edge> EdgeList;
 };

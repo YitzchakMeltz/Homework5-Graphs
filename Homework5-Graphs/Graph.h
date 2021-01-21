@@ -18,7 +18,7 @@ public:
 	bool delEdgeShell(string s, string t);
 	bool printNeighborsShell(string k);
 	bool printFollowersShell(string k);
-	bool printAllReachedShell(string k);
+	//bool printAllReachedShell(string k);
 	bool printAll();
 private:
 	map<string, Vertex> graphMap;
