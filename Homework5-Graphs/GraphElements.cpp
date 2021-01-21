@@ -16,8 +16,7 @@ bool Edge:: operator==(const Edge& e) const
 Vertex::Vertex(string key)
 {
 	Key = key;
-	reached = false;
-	//color = White;
+	visited = false;
 }
 
 void Vertex::addEdge(Edge e)
@@ -74,8 +73,6 @@ bool Vertex:: operator==(Vertex& v)
 void Vertex::print()
 {
 	cout << Key << ": ";
-
-	//list<Edge>::iterator it;
 
 	for (list<Edge>::iterator it = EdgeList.begin(); it != EdgeList.end(); it++)
 	{

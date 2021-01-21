@@ -18,12 +18,10 @@ public:
 	Vertex* target;
 };
 
-//enum class Color {White,Gray,Black};
-
 class Vertex
 {
 public:
-	Vertex() { reached = false; }
+	Vertex() { visited = false; }
 	Vertex(string key);
 	void addEdge(Edge);
 	bool removeEdge(Edge);
@@ -35,7 +33,6 @@ public:
 	friend class Graph;
 private:
 	string Key;
-	bool reached;
-	//Color color=Color::White;
+	bool visited;
 	list<Edge> EdgeList;
 };

@@ -1,6 +1,7 @@
 #include"GraphElements.h"
 #include<map>
 #include<list>
+#include <queue> 
 
 #pragma once
 
@@ -12,13 +13,13 @@ public:
 	Graph() {};
 	~Graph() { graphMap.clear(); }
 	bool vertexExist(string);
-	bool addVertexShell(string v);
+	void addVertexShell(string v);
 	bool delVertexShell(string v);
 	bool addEdgeShell(string s, string t);
 	bool delEdgeShell(string s, string t);
 	bool printNeighborsShell(string k);
 	bool printFollowersShell(string k);
-	//bool printAllReachedShell(string k);
+	void printAllReachedShell(string k);
 	bool printAll();
 private:
 	map<string, Vertex> graphMap;

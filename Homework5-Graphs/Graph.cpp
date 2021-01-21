@@ -1,5 +1,7 @@
 #include "Graph.h"
 
+
+//function checks if there exists a Vertex in the graph who's key matches the given string
 bool Graph::vertexExist(string s)
 {
 	map<string, Vertex>::iterator it;
@@ -11,20 +13,25 @@ bool Graph::vertexExist(string s)
 	return false;
 }
 
-bool Graph::addVertexShell(string v)
+
+//function adds a Vertex from to graph
+void Graph::addVertexShell(string v)
 {
 	graphMap.insert({ v,Vertex(v) });
-
-	return true;
 }
 
+
+//function deletes a Vertex from the graph
 bool Graph::delVertexShell(string v)
 {
-	Vertex* temp = &graphMap[v];
+	if (!vertexExist(v))
+		return false;
+
+	Vertex* temp = &graphMap[v];			//create a pointer to the Vertex with the key that matches the given string
 
 	map<string, Vertex>::iterator it;
 
-	//find and remove all edges to our Vertex
+	//find and remove all edges to our Vertex (from another Vertex)
 	for (it = graphMap.begin(); it != graphMap.end(); it++)
 	{
 		if (it->second.targetExist(temp))
@@ -36,34 +43,32 @@ bool Graph::delVertexShell(string v)
 	return true;
 }
 
+
+//function adds an edge to the graph
 bool Graph::addEdgeShell(string s, string t)
 {
-	if (!vertexExist(s))
-		throw "Error. Source vertex does not exist.\n";
+	if (!vertexExist(s) || !vertexExist(t))		//check if source and target vertices exist
+		return false;
 
-	if (!vertexExist(t))
-		throw "Error. Target vertex does not exist.\n";
+	if (graphMap[s].edgeExist(t))				//check if edge already exist
+		return false;
 
-	if (graphMap[s].edgeExist(t))
-		throw "ERROR. Edge already exist.\n";
-
-	graphMap[s].addEdge(&graphMap[t]);
+	graphMap[s].addEdge(&graphMap[t]);			//add the edge
 
 	return true;
 }
 
+
+//function deletes an edge from the graph
 bool Graph::delEdgeShell(string s, string t)
 {
-	if (!vertexExist(s))
-		throw "Error. Source vertex does not exist.\n";
+	if (!vertexExist(s) || !vertexExist(t))		//check if source and target vertices exist
+		return false;
 
-	if (!vertexExist(t))
-		throw "Error. Target vertex does not exist.\n";
+	if (!graphMap[s].edgeExist(t))				//check if edge exist
+		return false;
 
-	if (!graphMap[s].edgeExist(t))
-		throw "ERROR. Edge does not exist.\n";
-
-	graphMap[s].removeEdge(Edge(&graphMap[t]));
+	graphMap[s].removeEdge(Edge(&graphMap[t]));	//delete the edge
 
 	return true;
 }
@@ -73,36 +78,85 @@ bool Graph::delEdgeShell(string s, string t)
 bool Graph::printNeighborsShell(string k)
 {
 	if (!vertexExist(k))
-		throw "Error. Source vertex does not exist.\n";
+		return false;
 
 	list<Edge>::iterator it;
 
 	for (it = graphMap[k].EdgeList.begin(); it != graphMap[k].EdgeList.end(); it++)
-		cout << it->target->Key << endl;
+		cout << it->target->Key << " ";
 
 	return true;
 }
 
+
+//given Vertex v, prints all vertices u that have an edge from u to v
 bool Graph::printFollowersShell(string k)
 {
+	if (!vertexExist(k))
+	{
+		cout << "ERROR" << endl;
+		return false;
+	}
+
+	//go through map (outer loop) and for each Vertex check if it has an edge to our Vertex (inner loop)
+	//if it does, print the key
 	map<string, Vertex>::iterator it;
 
 	for (it = graphMap.begin(); it != graphMap.end(); it++)
 	{
 		list<Edge>::iterator jt;
 
-		for (jt = it->second.EdgeList.begin(); jt != it->second.EdgeList.end(); it++)
-			if (jt->target == &graphMap[k])
-				cout << it->first << endl;
+		for (jt = it->second.EdgeList.begin(); jt != it->second.EdgeList.end(); jt++)
+			if (jt->target->Key == k)
+				cout << it->first << " ";
 	}
 
 	return true;
 }
 
+
+//Print from Vertex with key that matches given string using BFS (Breadth First Search)
+void Graph::printAllReachedShell(string k)
+{
+	if (!vertexExist(k))
+	{
+		cout << "ERROR" << endl;
+		return;
+	}
+
+	//set all visited flags to false;
+	for (map<string, Vertex>::iterator it = graphMap.begin(); it != graphMap.end(); it++)
+		it->second.visited = false;
+
+	list<Vertex> que;
+
+	graphMap[k].visited = true;				//set root Vertex to visited (true)
+
+	que.push_back(graphMap[k]);
+
+	while (!que.empty())
+	{
+		cout << que.front().Key << " ";
+
+		list<Edge> listCopy = que.front().EdgeList;
+
+		que.pop_front();
+
+		for (list<Edge>::iterator it = listCopy.begin(); it != listCopy.end(); it++)
+		{
+			if (!it->target->visited)
+			{
+				it->target->visited = true;
+				que.push_back(*(it->target));
+			}
+		}
+	}
+}//Print complete Graph
 bool Graph::printAll()
 {
 	map<string, Vertex>::iterator it;
 
+	//Run through Graph and print each Vertex and it's edges (using print())
 	for (it = graphMap.begin(); it != graphMap.end(); it++)
 	{
 		it->second.print();
